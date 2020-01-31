@@ -18,21 +18,30 @@
 
 declare(strict_types=1);
 
-namespace Geeshoe\Atom\Contract;
+namespace Geeshoe\Atom\UnitTests\Factory;
+
+use Geeshoe\Atom\Factory\AuthorFactory;
+use PHPUnit\Framework\TestCase;
 
 /**
- * Interface CollectionInterface
+ * Class AuthorFactoryTest
  *
- * @package Geeshoe\Atom\Contract
+ * @package Geeshoe\Atom\UnitTests\Factory
  * @author  Jesse Rushlow <jr@geeshoe.com>
- * @template TKey
- * @template T
- * @template-extends \IteratorAggregate<TKey, T>
- * @template-extends \ArrayAccess<TKey, T>
  */
-interface CollectionInterface extends \ArrayAccess, \Countable, \IteratorAggregate
+class AuthorFactoryTest extends TestCase
 {
-    public function add(ElementInterface $element): void;
+    /** @test */
+    public function setsProvidedParams(): void
+    {
+        $name = 'Rushlow';
+        $uri = 'https://rushlow.dev';
+        $email = 'jr@rushlow.dev';
 
-    public function isEmpty(): bool;
+        $result = AuthorFactory::createAuthor($name, $uri, $email);
+
+        self::assertSame($name, $result->getName());
+        self::assertSame($uri, $result->getUri());
+        self::assertSame($email, $result->getEmail());
+    }
 }

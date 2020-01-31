@@ -53,6 +53,7 @@ class CollectionInterfaceTest extends TestCase
     /** @return \Generator<array<string>> */
     public function methodDataProvider(): \Generator
     {
+        yield ['add'];
         yield ['isEmpty'];
     }
 

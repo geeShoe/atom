@@ -18,21 +18,20 @@
 
 declare(strict_types=1);
 
-namespace Geeshoe\Atom\Contract;
+namespace Geeshoe\Atom\Factory;
+
+use Geeshoe\Atom\Model\Author;
 
 /**
- * Interface CollectionInterface
+ * Class AuthorFactory
  *
- * @package Geeshoe\Atom\Contract
+ * @package Geeshoe\Atom\Factory
  * @author  Jesse Rushlow <jr@geeshoe.com>
- * @template TKey
- * @template T
- * @template-extends \IteratorAggregate<TKey, T>
- * @template-extends \ArrayAccess<TKey, T>
  */
-interface CollectionInterface extends \ArrayAccess, \Countable, \IteratorAggregate
+class AuthorFactory
 {
-    public function add(ElementInterface $element): void;
-
-    public function isEmpty(): bool;
+    public static function createAuthor(string $name, string $uri = null, string $email = null): Author
+    {
+        return new Author($name, $uri, $email);
+    }
 }

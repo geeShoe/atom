@@ -23,6 +23,7 @@ namespace Geeshoe\Atom\UnitTests\Model;
 use Geeshoe\Atom\Collection\ElementCollection;
 use Geeshoe\Atom\Contract\CollectionInterface;
 use Geeshoe\Atom\Exception\ModelException;
+use Geeshoe\Atom\Model\Author;
 use Geeshoe\Atom\Model\Feed;
 use PHPUnit\Framework\TestCase;
 
@@ -116,7 +117,7 @@ class FeedTest extends TestCase
     public function optionalElementGetterSetters(): array
     {
         return [
-            ['getAuthor', 'setAuthor', $this->createMock(CollectionInterface::class)]
+            ['getAuthors', 'setAuthors', $this->createMock(CollectionInterface::class)]
         ];
     }
 
@@ -138,10 +139,26 @@ class FeedTest extends TestCase
         self::assertSame($expected, $feed->$getter());
     }
 
+    public function testAddAuthorAddsAuthorToExistingCollection(): void
+    {
+        $mockAuthor = $this->createMock(Author::class);
+
+        $feed = new Feed('', '', $this->expected['updated']);
+
+        $collection = $this->createMock(ElementCollection::class);
+        $collection->expects($this->once())
+            ->method('add')
+            ->with($mockAuthor);
+
+        $feed->setAuthors($collection);
+
+        $feed->addAuthor($mockAuthor);
+    }
+
     /** @test */
     public function constructCreatesAuthorElementCollection(): void
     {
         $feed = new Feed('', '', $this->expected['updated']);
-        self::assertInstanceOf(ElementCollection::class, $feed->getAuthor());
+        self::assertInstanceOf(ElementCollection::class, $feed->getAuthors());
     }
 }

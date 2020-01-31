@@ -39,7 +39,7 @@ class Feed implements FeedInterface
 
     private \DateTimeInterface $updated;
 
-    private CollectionInterface $author;
+    private CollectionInterface $authors;
 
     /**
      * Feed constructor.
@@ -55,7 +55,7 @@ class Feed implements FeedInterface
         $this->title = $title;
 
         $this->updated = $updated;
-        $this->author = new ElementCollection();
+        $this->authors = new ElementCollection();
     }
 
     /**
@@ -94,13 +94,18 @@ class Feed implements FeedInterface
         return $this->updated;
     }
 
-    public function getAuthor(): CollectionInterface
+    public function getAuthors(): CollectionInterface
     {
-        return $this->author;
+        return $this->authors;
     }
 
-    public function setAuthor(CollectionInterface $author): void
+    public function setAuthors(CollectionInterface $authors): void
     {
-        $this->author = $author;
+        $this->authors = $authors;
+    }
+
+    public function addAuthor(Author $author): void
+    {
+        $this->authors->add($author);
     }
 }
